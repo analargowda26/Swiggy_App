@@ -1,0 +1,66 @@
+.app-nav {
+    padding: 20px;
+    background: linear-gradient(135deg, #fc8019 0%, #fc8019 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+.app-nav h1 {
+    color: white;
+    font-size: 24px;
+    margin: 0;
+}
+
+.auth-details {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.auth-details a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.auth-details a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.auth-details button {
+    background-color: white;
+    color: #ff6b00;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.auth-details button:hover {
+    background-color: #f0f0f0;
+}
+
+.cart-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .app-nav h1:hover {
+    cursor: pointer;
+  }
+  .user-name {
+    color: white;
+    font-weight: bold;
+    padding: 8px 16px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
