@@ -3,6 +3,7 @@ const router = express.Router();
 const Order = require("../models/Order");
 const authMiddleware = require("../middleware/auth");
 
+// Create a new order (protected route)
 router.post("/", authMiddleware, async (req, res) => {
   try {
     const { restaurantId, items, totalPrice, deliveryAddress } = req.body;
@@ -28,11 +29,12 @@ router.post("/", authMiddleware, async (req, res) => {
   }
 });
 
-// Get all orders for a user
-// Get all orders for a user (protected route)
-router.get("/user/:userId", authMiddleware, async (req, res) => {
+// Get all orders for the logged-in user (protected route)
+router.get("/user", authMiddleware, async (req, res) => {
   try {
-    const orders = await Order.find({ userId: req.params.userId })
+    const userId = req.user.id; // Get userId from JWT token
+
+    const orders = await Order.find({ userId })
       .populate("restaurantId")
       .sort({ createdAt: -1 });
 
@@ -43,7 +45,6 @@ router.get("/user/:userId", authMiddleware, async (req, res) => {
   }
 });
 
-// Get single order by ID
 // Get single order by ID (protected route)
 router.get("/:id", authMiddleware, async (req, res) => {
   try {

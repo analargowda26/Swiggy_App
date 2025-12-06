@@ -66,8 +66,9 @@ export const createOrderAPI = async (orderData) => {
   return response.data;
 };
 
-export const getUserOrdersAPI = async (userId) => {
-  const response = await api.get(`/orders/user/${userId}`);
+// Updated: no userId parameter needed
+export const getUserOrdersAPI = async () => {
+  const response = await api.get("/orders/user");
   return response.data;
 };
 
@@ -77,13 +78,14 @@ export const getOrderByIdAPI = async (orderId) => {
 };
 
 // ---------------- REVIEWS ----------------
+// Use `api` instance to include auth headers if needed
 export const getReviewsAPI = async (id) => {
-  const res = await axios.get(`${API_URL}/restaurants/${id}/reviews`);
+  const res = await api.get(`/restaurants/${id}/reviews`);
   return res.data.reviews;
 };
 
 export const addReviewAPI = async (id, data) => {
-  const res = await axios.post(`${API_URL}/restaurants/${id}/reviews`, data);
+  const res = await api.post(`/restaurants/${id}/reviews`, data);
   return res.data;
 };
 

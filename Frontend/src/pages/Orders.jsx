@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useUser } from "../context/UserContext";
-import { getUserOrdersAPI } from "../services/api";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./Orders.css";
 
 const Orders = () => {
@@ -18,11 +18,20 @@ const Orders = () => {
 
   const fetchOrders = async () => {
     try {
-      const data = await getUserOrdersAPI(user.id || user._id);
-      setOrders(data);
+      const token = localStorage.getItem("token"); // Get JWT token
+      const response = await axios.get(
+        "http://localhost:5000/api/orders/user", // Updated backend route
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Pass token in headers
+          },
+        }
+      );
+
+      setOrders(response.data);
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching orders:", error);
+      console.error("Error fetching orders:", error.response?.data || error.message);
       setLoading(false);
     }
   };
