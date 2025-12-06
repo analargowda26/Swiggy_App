@@ -9,6 +9,7 @@ const api = axios.create({
   },
 });
 
+// Add token to requests
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
@@ -17,11 +18,10 @@ api.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
+// Handle 401 unauthorized
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -33,7 +33,7 @@ api.interceptors.response.use(
   }
 );
 
-// Auth APIs
+// ---------------- AUTH APIs ----------------
 export const signupAPI = async (userData) => {
   const response = await api.post("/auth/signup", userData);
   return response.data;
@@ -44,7 +44,7 @@ export const loginAPI = async (credentials) => {
   return response.data;
 };
 
-// Restaurants APIs
+// ---------------- RESTAURANTS ----------------
 export const getRestaurantsAPI = async () => {
   const response = await api.get("/restaurants");
   return response.data.restaurants;
@@ -60,7 +60,7 @@ export const getMenuItemsAPI = async (restaurantId) => {
   return response.data;
 };
 
-// Orders APIs
+// ---------------- ORDERS ----------------
 export const createOrderAPI = async (orderData) => {
   const response = await api.post("/orders", orderData);
   return response.data;
@@ -76,34 +76,25 @@ export const getOrderByIdAPI = async (orderId) => {
   return response.data;
 };
 
-<<<<<<< HEAD
-// Reviews APIs
-=======
-// ⭐ GET Reviews
->>>>>>> deae9137424443e3aa1a99afc1c7f93137feb1b1
+// ---------------- REVIEWS ----------------
 export const getReviewsAPI = async (id) => {
   const res = await axios.get(`${API_URL}/restaurants/${id}/reviews`);
   return res.data.reviews;
 };
 
-<<<<<<< HEAD
 export const addReviewAPI = async (id, data) => {
   const res = await axios.post(`${API_URL}/restaurants/${id}/reviews`, data);
   return res.data;
 };
 
-// ✅ Password reset flow APIs (updated for robust error handling)
+// ---------------- PASSWORD RESET ----------------
 export const forgotPassword = async (email) => {
   try {
     if (!email) throw new Error("Email is required");
     const response = await api.post("/auth/forgot-password", { email });
     return response.data;
   } catch (err) {
-    if (err.response?.data?.message) {
-      throw new Error(err.response.data.message);
-    } else {
-      throw new Error("Something went wrong. Please try again.");
-    }
+    throw new Error(err.response?.data?.message || "Something went wrong. Please try again.");
   }
 };
 
@@ -112,11 +103,7 @@ export const verifyOtp = async (data) => {
     const response = await api.post("/auth/verify-otp", data);
     return response.data;
   } catch (err) {
-    if (err.response?.data?.message) {
-      throw new Error(err.response.data.message);
-    } else {
-      throw new Error("Something went wrong. Please try again.");
-    }
+    throw new Error(err.response?.data?.message || "Something went wrong. Please try again.");
   }
 };
 
@@ -125,17 +112,6 @@ export const resetPassword = async (data) => {
     const response = await api.post("/auth/reset-password", data);
     return response.data;
   } catch (err) {
-    if (err.response?.data?.message) {
-      throw new Error(err.response.data.message);
-    } else {
-      throw new Error("Something went wrong. Please try again.");
-    }
+    throw new Error(err.response?.data?.message || "Something went wrong. Please try again.");
   }
 };
-=======
-// ⭐ POST Review
-export const addReviewAPI = async (id, data) => {
-  const res = await axios.post(`${API_URL}/restaurants/${id}/reviews`, data);
-  return res.data;
-};
->>>>>>> deae9137424443e3aa1a99afc1c7f93137feb1b1
